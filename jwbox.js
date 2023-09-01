@@ -1,14 +1,7 @@
 /*-JW BOX-*/
-/* This line loads JW7. If you want to load JW6, use http://p.jwpcdn.com/6/12/jwplayer.js, or your own self hosted copy. */
-document.write("<script type=\"text/javascript\" src=\"http://p.jwpcdn.com/player/v/7.0.0/jwplayer.js\"></script>");
-/* This is a JW7 Key. Requireed for JW7 to work. Please add your own key if you are going to be using this with JW7. Not needed for JW6. */
-document.write("<script>jwplayer.key='IF5khcPYvMy9zcwVoe6msTtSnj/aa5ZFlEIOsA==';</script>");
-document.write("<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js\"></script>");
-document.write("<link rel=\"stylesheet\" href=\"https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css\">");
-document.write("<script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js\"></script>");
 var iOSorAndroid = navigator.userAgent.match(/iPad/i) != null || navigator.userAgent.match(/iPhone/i) != null || navigator.userAgent.match(/android/i) != null;
 var theclientHeight = document.documentElement.clientHeight == 0;
-var thePrimary = "html5";
+//var thePrimary = "html5";
 var isMobile = (/iphone|ipod|android|ie|blackberry|fennec/).test(navigator.userAgent.toLowerCase());
 var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
 var isIE = IE='\v'=='v';
@@ -123,7 +116,7 @@ setupPlayer = function(){
 	theBg.style.margin = "0px";
 	theBg.style.background = "#000000";
 	theBg.style.opacity = "0.75";
-	theBg.style.zIndex = "998";
+	theBg.style.zIndex = "1998";
 	theBg.style.display = "none";
 	var theBorder = document.createElement('div');
 	theBorder.setAttribute('id','theBorder');
@@ -138,7 +131,7 @@ setupPlayer = function(){
 	theBorder.style.boxShadow = "0px 0px 25px #000000";
 	theBorder.style.margin = "0px";
 	theBorder.style.background = "#EEEEEE";
-	theBorder.style.zIndex = "999";
+	theBorder.style.zIndex = "1999";
 	theBorder.style.display = "none";
 	var theTxt = document.createElement('div');
 	theTxt.setAttribute('id','theTxt');
@@ -168,13 +161,13 @@ setupPlayer = function(){
 		$("#theTxt").fadeOut();
 	}
 }
-playVideo = function(theFile,theImg,thePrimary,canDrag,canResize){
+playVideo = function(theFile,theImg,canDrag,canResize)
+{
 	jwplayer("thePlayer").setup({
 		file: theFile,
 		image: theImg,
-		width: "100%",
-		height: "100%",
-		primary: thePrimary
+	    width: "100%",		
+		height: "100%"
 	});
 	if (!iOSorAndroid){
 		jwplayer().play();
@@ -186,7 +179,8 @@ playVideo = function(theFile,theImg,thePrimary,canDrag,canResize){
 	}
 	if (isMobile == false || isIEold() || !isSafari){
 		if (navigator.appName.indexOf("Microsoft") != -1){
-			jwplayer().onReady(function(){
+			jwplayer().on('ready', function()
+			{
 				document.onclick = function(event){
 					hasParent = false;
 					for(var node = event ? event.target : window.event.srcElement; node != document.body; node = node.parentNode){
@@ -210,7 +204,7 @@ playVideo = function(theFile,theImg,thePrimary,canDrag,canResize){
 					}
 				}
 			});
-			jwplayer().onIdle(function(){
+			jwplayer().on('idle', function(){
 				document.onclick = function(event){
 					hasParent = false;
 					for(var node = event ? event.target : window.event.srcElement; node != document.body; node = node.parentNode){
@@ -231,7 +225,8 @@ playVideo = function(theFile,theImg,thePrimary,canDrag,canResize){
 				}
 			});
 		} else {
-			jwplayer().onReady(function(){
+			jwplayer().on('ready', function()
+			{
 				document.onclick = function(event){
 					hasParent = false;
 					for(var node = event.target; node != document.body; node = node.parentNode){
@@ -253,7 +248,7 @@ playVideo = function(theFile,theImg,thePrimary,canDrag,canResize){
 					}
 				}
 			});
-			jwplayer().onIdle(function(){
+			jwplayer().on('idle', function(){
 				document.onclick = function(event){
 					hasParent = false;
 					if(hasParent){
@@ -264,7 +259,7 @@ playVideo = function(theFile,theImg,thePrimary,canDrag,canResize){
 			});
 		}
 	}
-	jwplayer().onComplete(function(){
+	jwplayer().on('complete', function(){
 		if(theclientHeight){
 			displayNone();
 		} else {
@@ -281,65 +276,41 @@ playVideo = function(theFile,theImg,thePrimary,canDrag,canResize){
 	} else {
 		document.onkeydown = checkKey;
 	}
-	if(canDrag == "drag"){
-		if(isIEold() || isIE11){
-		} else {
-			jwplayer().onReady(function(){
-                /* This part is only needed for JW6, since getRenderingMode is deprecated for JW7. */
-				if(jwplayer().getRenderingMode() == "flash"){
-					$('#theBorder').draggable().on('drag', function(e){
-						var a = document.getElementById('theBorder').style.width;
-						a = parseFloat(a);
-						a = a - 135;
-						var b = document.getElementById('theBorder').style.height;
-						b = parseFloat(b);
-						b = b - 55;
-						var c = document.getElementById('theBorder').style.left;
-						c = parseFloat(c);
-						c = c + 60;
-						var d = document.getElementById('theBorder').style.top;
-						d = parseFloat(d);
-						d = d + 30;
-						document.getElementById('thePlayer').style.width = a + "px";
-						document.getElementById('thePlayer').style.height = b + "px";
-						document.getElementById('thePlayer').style.left = c + "px";
-						document.getElementById('thePlayer').style.top = d + "px";
-						document.getElementById('theTxt').style.visibility = "hidden";
-					});
-				} else {
-					$.ui.plugin.add("draggable","alsoDrag",{start:function(){var a=$(this).data("ui-draggable"),o=a.options,t=function(a){$(a).each(function(){var a=$(this);a.data("ui-draggable-alsoDrag",{top:parseInt(a.css("top"),10),left:parseInt(a.css("left"),10)})})};"object"!=typeof o.alsoDrag||o.alsoDrag.parentNode?t(o.alsoDrag):o.alsoDrag.length?(o.alsoDrag=o.alsoDrag[0],t(o.alsoDrag)):$.each(o.alsoDrag,function(a){t(a)})},drag:function(){var a=$(this).data("ui-draggable"),o=a.options,t=(a.originalSize,a.originalPosition),s={top:a.position.top-t.top||0,left:a.position.left-t.left||0},i=function(a){$(a).each(function(){var a=$(this),o=$(this).data("ui-draggable-alsoDrag"),t={},i=["top","left"];$.each(i,function(a,i){var r=(o[i]||0)+(s[i]||0);t[i]=r||null}),a.css(t)})};"object"!=typeof o.alsoDrag||o.alsoDrag.nodeType?i(o.alsoDrag):$.each(o.alsoDrag,function(a,o){i(a,o)})},stop:function(){$(this).removeData("draggable-alsoDrag")}});
-					$(function() {
-						$("#theBorder").draggable({alsoDrag: "#thePlayer,#theTxt"});
-					});
-					var getAll = function(t) {
-						return $('.group' + t.helper.attr('class').match(/group([0-9]+)/)[1]).not(t);
-					};
-				}
+	if(canDrag)
+	{
+		if(isIEold() || isIE11)
+		{
+		} 
+		else 
+		{
+			jwplayer().on('ready', function()
+			{                
+				$.ui.plugin.add("draggable","alsoDrag",{start:function(){var a=$(this).data("ui-draggable"),o=a.options,t=function(a){$(a).each(function(){var a=$(this);a.data("ui-draggable-alsoDrag",{top:parseInt(a.css("top"),10),left:parseInt(a.css("left"),10)})})};"object"!=typeof o.alsoDrag||o.alsoDrag.parentNode?t(o.alsoDrag):o.alsoDrag.length?(o.alsoDrag=o.alsoDrag[0],t(o.alsoDrag)):$.each(o.alsoDrag,function(a){t(a)})},drag:function(){var a=$(this).data("ui-draggable"),o=a.options,t=(a.originalSize,a.originalPosition),s={top:a.position.top-t.top||0,left:a.position.left-t.left||0},i=function(a){$(a).each(function(){var a=$(this),o=$(this).data("ui-draggable-alsoDrag"),t={},i=["top","left"];$.each(i,function(a,i){var r=(o[i]||0)+(s[i]||0);t[i]=r||null}),a.css(t)})};"object"!=typeof o.alsoDrag||o.alsoDrag.nodeType?i(o.alsoDrag):$.each(o.alsoDrag,function(a,o){i(a,o)})},stop:function(){$(this).removeData("draggable-alsoDrag")}});
+				$(function() 
+				{
+					$("#theBorder").draggable({alsoDrag: "#thePlayer,#theTxt"});
+				});
+				var getAll = function(t) 
+				{
+					return $('.group' + t.helper.attr('class').match(/group([0-9]+)/)[1]).not(t);
+				};
 			});
 		}
 	}
-	if(canResize == "resize"){
-		if(isIEold() || isIE11){
-		} else {
-			jwplayer().onReady(function(){
-                /* This part is only needed for JW6, since getRenderingMode is deprecated for JW7. */
-				if(jwplayer().getRenderingMode() == "flash"){
-					$("#theBorder").resizable().on('resize', function(e){
-						var a = document.getElementById('theBorder').style.width;
-						a = parseFloat(a);
-						a = a - 135;
-						var b = document.getElementById('theBorder').style.height;
-						b = parseFloat(b);
-						b = b - 55;
-						document.getElementById('thePlayer').style.width = a + "px";
-						document.getElementById('thePlayer').style.height = b + "px";
-					});
-				} else {
-					$(function() {
-						$("#theBorder").resizable({alsoResize: "#thePlayer"});
-					});
-				}
-			});
+	if(canResize)
+	{
+		if(isIEold() || isIE11)
+		{
+		} 
+		else 
+		{
+			jwplayer().on('ready', function()
+			{			
+				$(function() 
+				{
+					$("#theBorder").resizable({alsoResize: "#thePlayer"});
+				});
+			});			
 		}
 	}
 }
