@@ -1,3 +1,14 @@
+FORKED FROM https://github.com/emaxsaun
+Thanks!!
+
+Updated to support jwplayer 8.
+Removed references to jwplayer 7.
+
+You will need to reference your own jw8 library and provide the appropriate key.
+
+I intend to update this README more later.
+---
+
 JW Box - A JW Player LightBox
 ==========
 
