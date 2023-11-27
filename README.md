@@ -6,7 +6,9 @@ Removed references to jwplayer 7.
 
 You will need to reference your own jw8 library and provide the appropriate key.
 
-I intend to update this README more later.
+We are using this code in a production environment now and appears to be stable.
+
+With time, I will update this README more later.
 ---
 
 JW Box - A JW Player LightBox
