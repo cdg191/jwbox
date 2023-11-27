@@ -1,8 +1,7 @@
 FORKED FROM https://github.com/emaxsaun
 Thanks!!
 
-Updated to support jwplayer 8.
-Removed references to jwplayer 7.
+Updated to support jwplayer 8, removed references to jwplayer 7 and IE.
 
 You will need to reference your own jw8 library and provide the appropriate key.
 
